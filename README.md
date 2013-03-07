@@ -1,0 +1,4 @@
+workspace
+=========
+
+Just a workspace.
