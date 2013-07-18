@@ -18,11 +18,85 @@ static int waitTimeOut(sem_t* sem, int timeout/* only support sec*/)
     return sem_timedwait(sem, time_out);
 }
 
-int push(BlockingQueue_t* queue, void* data, size_t size)
+static int push_into_queue( BlockingQueue_t* queue, void* data, size_t size)
 {
-    if (queue == NULL || data == NULL)
+    if ( queue->size == queue->length)
+        return RET_ERR;
+    queue->queue[queue->tail]->data = data;
+    queue->tail = ++queue->tail % queue->length;
+    queue->size ++;
+    
+    return RET_SUC;
+}
+
+static int pop_from_queue( BlockingQueue_t* queue, void* data, size_t* size)
+{
+    if ( queue->size == 0)
+        return RET_ERR;
+    node_t* node = queue->queue[head];
+    head ++;
+    head = head % queue->length;
+    data = node->data;
+    node->data = NULL;
+    size = node->size;
+    return RET_SUC;
+}
+
+int pop(BlockingQueue_t* queue, void* data, size_t* size)
+{
+    int ret = RET_SUC;
+    if( queue == NULL)
         return RET_ERR;
     
+    if ( queue->size == 0 &&
+            sem_wait( queue->empty_sem) < 0)
+        return RET_ERR;
+    
+    if ( pthread_mutex_lock( queue->mutex) != 0)
+        return RET_ERR;
+        
+    ret = pop_from_queue( queue, data, size);
+    ret |= pthread_mutex_unlock( queue->mutex);
+    ret |= sem_post( queue->full_sem);
+    return ret;
+}
+
+int pop_by_timeout(BlockingQueue_t* queue, void* data, size_t* size, int time_out/* sec....*/)
+{
+    int ret = RET_SUC;
+    if ( queue == NULL )
+        return RET_ERR;
+        
+    if ( queue->size == 0 &&
+            waitTimeout( queue->empty_sem. time_out) < 0)
+        return RET_ERR;
+    
+    if ( pthread_mutex_lock( queue->mutex) != 0)
+        return RET_ERR;
+    
+    ret = pop_from_queue( queue, data, size);
+    ret |= pthread_mutex_unlock( queue->mutex);
+    ret |= sem_post( queue->full_sem);
+    return ret;
+}
+
+int push(BlockingQueue_t* queue, void* data, size_t size)
+{
+    int ret = RET_SUC;
+    if ( queue == NULL || data == NULL)
+        return RET_ERR;
+        
+    if ( queue->size == queue->length && 
+            sem_wait( queue->full_sem) < 0)
+        return RET_ERR;
+    
+    if ( pthread_mutex_lock(queue->mutex) != 0)
+        return RET_ERR;
+        
+    ret = push_into_queue( queue, data, size);
+    ret |= phtread_mutex_unlock( queue->mutex);
+    ret |= sem_post( queue->empty_sem);
+    return ret;
 }
 
 int push_by_timeout(BlockingQueue_t* queue, void* data, size_t size, int time_out /* sec..*/)
@@ -41,11 +115,12 @@ int push_by_timeout(BlockingQueue_t* queue, void* data, size_t size, int time_ou
     if (pthread_mutex_lock(queue->mutex) != 0)
         return RET_ERR;
         
-    queue->queue[queue->tail]->data = data;
-    queue->tail = ++queue->tail % queue->length;
-    queue->size ++;
+    ret = push_into_queue( queue, data, size);
     
-}
+    ret |= pthread_mutex_unlock(queue->mutext);
+    ret |= sem_post(queue->empty_sem);
+    return ret;
+ }
 
 int destroyBloackingQueue(BlockingQueue_t* queue)
 {
