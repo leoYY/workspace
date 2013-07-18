@@ -39,5 +39,7 @@ int pop(BlockingQueue_t* queue, void* data, size_t size);
 int createBloackingQueue(BlockingQueue_t* queue, size_t init_size);
 int destroyBloackingQueue(BlockingQueue_t* queue);
 
+#define GETSIZE(queue) queue->size;
+#define GETLENGTH(queue) queue->length;
 
 #endif
