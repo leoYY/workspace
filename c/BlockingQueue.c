@@ -41,6 +41,9 @@ int push_by_timeout(BlockingQueue_t* queue, void* data, size_t size, int time_ou
     if (pthread_mutex_lock(queue->mutex) != 0)
         return RET_ERR;
         
+    queue->queue[queue->tail]->data = data;
+    queue->tail = ++queue->tail % queue->length;
+    queue->size ++;
     
 }
 
