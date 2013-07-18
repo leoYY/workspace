@@ -20,6 +20,9 @@ static int waitTimeOut(sem_t* sem, int timeout/* only support sec*/)
 
 int push(BlockingQueue_t* queue, void* data, size_t size)
 {
+    if (queue == NULL || data == NULL)
+        return RET_ERR;
+    
 }
 
 int push_by_timeout(BlockingQueue_t* queue, void* data, size_t size, int time_out /* sec..*/)
@@ -31,7 +34,14 @@ int push_by_timeout(BlockingQueue_t* queue, void* data, size_t size, int time_ou
     
     // NOTE must be do sem_wait before mutex_lock, or maybe deadlock.
     if ( queue->size == queue->length && 
-            waitTimeOut(queue->full_sem, time_out) )
+            waitTimeOut(queue->full_sem, time_out) < 0)
+        return RET_ERR;
+    
+    // if lock failed. ret err
+    if (pthread_mutex_lock(queue->mutex) != 0)
+        return RET_ERR;
+        
+    
 }
 
 int destroyBloackingQueue(BlockingQueue_t* queue)
