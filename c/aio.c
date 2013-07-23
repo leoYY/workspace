@@ -9,9 +9,14 @@
 
 static int processEvent(event_driver_t* driver)
 {
-    if (driver == NULL)        
+    int ret = RET_SUC;
+    f (driver == NULL)        
         return RET_ERR;
-    if (driver->maxfd <= 0 ||driver->length <= 0)  
+    if (driver->maxfd <= 0 ||driver->length <= 0) 
+        return RET_SUC;
+        
+    // here assume all fields in event_driver_t is legal
+    ret = 
 }
 
 int process(event_driver_t* driver)
