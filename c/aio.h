@@ -50,13 +50,13 @@ int process(event_driver_t* driver);
 
 
 // API
-extern void event_API_addEvent(evnet_driver_t* driver, int fd, int mask);
-extern void event_API_delEvent(evnet_driver_t* driver, int fd, int delmask);
-extern void event_API_poll(evnet_driver_t* driver, struct timeval *tvp);
-extern void event_API_free(event_driver_t* driver);
-extern void event_API_resize(event_driver_t* driver);
-extern void event_API_init(event_driver_t* driver);
-extern void event_API_name(void);
+extern int event_API_addEvent(evnet_driver_t* driver, int fd, int mask);
+extern int event_API_delEvent(evnet_driver_t* driver, int fd, int delmask);
+extern int event_API_poll(evnet_driver_t* driver, struct timeval *tvp);
+extern int event_API_free(event_driver_t* driver);
+extern int  event_API_resize(event_driver_t* driver);
+extern int event_API_init(event_driver_t* driver);
+extern int event_API_name(void);
 
 #endif
 
