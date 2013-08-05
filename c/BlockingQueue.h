@@ -23,6 +23,8 @@ typedef struct _BlockingQueue{
     size_t length;
     sem_t* full_sem;
     sem_t* empty_sem;
+    pthread_cond_t* full_cond;
+    pthread_cond_t* empty_cond;
     pthread_mutex_t* mutex;
     int head;
     int tail;
