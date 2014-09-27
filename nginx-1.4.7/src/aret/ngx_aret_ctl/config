@@ -1,0 +1,3 @@
+ngx_addon_name=ngx_http_aret_module
+HTTP_MODULES="$HTTP_MODULES ngx_http_aret_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ngx_http_aret_module.cc $ngx_addon_dir/ngx_http_aret_record.cc $ngx_addon_dir/ngx_http_aret_recommend.cc $ngx_addon_dir/utils.cc $ngx_addon_dir/../service/src/re_engine.cc"
