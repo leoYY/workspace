@@ -1,11 +1,11 @@
 
 #include <pthread.h>
-#include <boost/noncopyable.hpp>
+#include "noncopyable.h"
 
 namespace common {
 namespace thread {
 
-class MutexLock: public boost::noncopyable
+class MutexLock: public noncopyable
 {
 public :
     MutexLock()
@@ -32,7 +32,7 @@ private :
     pthread_mutex_t _mutex;
 };
 
-class MutexLockGuard : public boost::noncopyable
+class MutexLockGuard : public noncopyable
 {
 public :
     explicit MutexLockGuard(MutexLock& mutex): _mutex(mutex)
