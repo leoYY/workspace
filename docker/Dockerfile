@@ -27,8 +27,6 @@ docker-version	0.6.1
 FROM	ubuntu:14.04
 MAINTAINER	Tianon Gravi <admwiggin@gmail.com> (@tianon)
 
-DOCKER_OPTS="--dns 10.81.0.231 --dns 10.81.0.237"
-
 # Packaged dependencies
 #RUN echo "deb http://mirrors.aliyun.com/ubuntu trusty main universe" > /etc/apt/sources.list && echo "deb-src http://mirrors.aliyun.com/ubuntu/ trusty main restricted" >> /etc/apt/sources.list 
 RUN	apt-get update && apt-get install -y \
