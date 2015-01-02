@@ -1,0 +1,29 @@
+	.file	"inline_case.cpp"
+	.text
+	.align 2
+	.p2align 4,,15
+	.globl	_ZN7TestCls5func1Ei
+	.type	_ZN7TestCls5func1Ei, @function
+_ZN7TestCls5func1Ei:
+.LFB20:
+	.cfi_startproc
+	movl	%esi, %eax
+	movl	%esi, (%rdi)
+	ret
+	.cfi_endproc
+.LFE20:
+	.size	_ZN7TestCls5func1Ei, .-_ZN7TestCls5func1Ei
+	.section	.text.startup,"ax",@progbits
+	.p2align 4,,15
+	.globl	main
+	.type	main, @function
+main:
+.LFB21:
+	.cfi_startproc
+	xorl	%eax, %eax
+	ret
+	.cfi_endproc
+.LFE21:
+	.size	main, .-main
+	.ident	"GCC: (Debian 4.7.2-5) 4.7.2"
+	.section	.note.GNU-stack,"",@progbits

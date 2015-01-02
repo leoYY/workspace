@@ -1,0 +1,54 @@
+	.file	"inline_case.c"
+	.text
+	.globl	inc
+	.type	inc, @function
+inc:
+.LFB7:
+	.cfi_startproc
+	leal	1(%rdi), %eax
+	ret
+	.cfi_endproc
+.LFE7:
+	.size	inc, .-inc
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"hehe %d\n"
+	.text
+	.globl	inc2
+	.type	inc2, @function
+inc2:
+.LFB8:
+	.cfi_startproc
+	pushq	%rbx
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	movl	%edi, %ebx
+	movl	%edi, %esi
+	movl	$.LC0, %edi
+	movl	$0, %eax
+	call	printf
+	movl	%ebx, %eax
+	popq	%rbx
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE8:
+	.size	inc2, .-inc2
+	.globl	main
+	.type	main, @function
+main:
+.LFB9:
+	.cfi_startproc
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	movl	$3, %edi
+	call	inc2
+	movl	$0, %eax
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE9:
+	.size	main, .-main
+	.ident	"GCC: (Debian 4.7.2-5) 4.7.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,129 @@
+	.file	"inline_case.cpp"
+	.section	.rodata
+.LC0:
+	.string	"hehe :%d"
+	.section	.text._ZN7TestCls4funcEi,"axG",@progbits,_ZN7TestCls4funcEi,comdat
+	.align 2
+	.weak	_ZN7TestCls4funcEi
+	.type	_ZN7TestCls4funcEi, @function
+_ZN7TestCls4funcEi:
+.LFB0:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movq	%rdi, -8(%rbp)
+	movl	%esi, -12(%rbp)
+	movl	-12(%rbp), %eax
+	movl	%eax, %esi
+	movl	$.LC0, %edi
+	movl	$0, %eax
+	call	printf
+	movl	-12(%rbp), %eax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	_ZN7TestCls4funcEi, .-_ZN7TestCls4funcEi
+	.section	.text._ZN7TestCls5func1Ei,"axG",@progbits,_ZN7TestCls5func1Ei,comdat
+	.align 2
+	.weak	_ZN7TestCls5func1Ei
+	.type	_ZN7TestCls5func1Ei, @function
+_ZN7TestCls5func1Ei:
+.LFB1:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movq	%rdi, -24(%rbp)
+	movl	%esi, -28(%rbp)
+	movl	$0, -4(%rbp)
+	jmp	.L4
+.L5:
+	movl	-4(%rbp), %eax
+	addl	%eax, -28(%rbp)
+	addl	$1, -4(%rbp)
+.L4:
+	cmpl	$99, -4(%rbp)
+	setle	%al
+	testb	%al, %al
+	jne	.L5
+	movl	-28(%rbp), %eax
+	movl	%eax, %esi
+	movl	$.LC0, %edi
+	movl	$0, %eax
+	call	printf
+	movl	-28(%rbp), %eax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE1:
+	.size	_ZN7TestCls5func1Ei, .-_ZN7TestCls5func1Ei
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB2:
+	.cfi_startproc
+	.cfi_personality 0x3,__gxx_personality_v0
+	.cfi_lsda 0x3,.LLSDA2
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$32, %rsp
+	movl	%edi, -20(%rbp)
+	movq	%rsi, -32(%rbp)
+	leaq	-16(%rbp), %rax
+	movl	$5, %esi
+	movq	%rax, %rdi
+.LEHB0:
+	call	_ZN7TestCls4funcEi
+	leaq	-16(%rbp), %rax
+	movl	$6, %esi
+	movq	%rax, %rdi
+	call	_ZN7TestCls5func1Ei
+.LEHE0:
+	movl	$0, %eax
+	jmp	.L11
+.L10:
+	movq	%rax, %rdi
+.LEHB1:
+	call	_Unwind_Resume
+.LEHE1:
+.L11:
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE2:
+	.globl	__gxx_personality_v0
+	.section	.gcc_except_table,"a",@progbits
+.LLSDA2:
+	.byte	0xff
+	.byte	0xff
+	.byte	0x1
+	.uleb128 .LLSDACSE2-.LLSDACSB2
+.LLSDACSB2:
+	.uleb128 .LEHB0-.LFB2
+	.uleb128 .LEHE0-.LEHB0
+	.uleb128 .L10-.LFB2
+	.uleb128 0
+	.uleb128 .LEHB1-.LFB2
+	.uleb128 .LEHE1-.LEHB1
+	.uleb128 0
+	.uleb128 0
+.LLSDACSE2:
+	.text
+	.size	main, .-main
+	.ident	"GCC: (Debian 4.7.2-5) 4.7.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,60 @@
+	.file	"inline_case.c"
+	.text
+	.p2align 4,,15
+	.globl	inc
+	.type	inc, @function
+inc:
+.LFB7:
+	.cfi_startproc
+	leal	1(%rdi), %eax
+	ret
+	.cfi_endproc
+.LFE7:
+	.size	inc, .-inc
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"hehe %d\n"
+	.text
+	.p2align 4,,15
+	.globl	inc2
+	.type	inc2, @function
+inc2:
+.LFB8:
+	.cfi_startproc
+	pushq	%rbx
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	movl	%edi, %esi
+	movl	%edi, %ebx
+	xorl	%eax, %eax
+	movl	$.LC0, %edi
+	call	printf
+	movl	%ebx, %eax
+	popq	%rbx
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE8:
+	.size	inc2, .-inc2
+	.section	.text.startup,"ax",@progbits
+	.p2align 4,,15
+	.globl	main
+	.type	main, @function
+main:
+.LFB9:
+	.cfi_startproc
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	movl	$3, %esi
+	movl	$.LC0, %edi
+	xorl	%eax, %eax
+	call	printf
+	xorl	%eax, %eax
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE9:
+	.size	main, .-main
+	.ident	"GCC: (Debian 4.7.2-5) 4.7.2"
+	.section	.note.GNU-stack,"",@progbits
