@@ -1,0 +1,10 @@
+Inline函数的处理,gcc/g++
+测试几种场景：
+Case1: inlcude file 中使用简单函数，不声明inline
+Case2: include file 中使用简单函数，声明inline
+Case3: include file 中使用简单函数， 声明static inline
+Case4: include file 中使用类，且类中成员函数声明与实现放在一起
+Case5: include file 中使用类， 且类中成员函数声明实现不在一起，且均在inlcude文件中
+Case6: include file中使用类， 且类中成员函数较复杂
+Case7:include file 中函数，声明和实现在不同文件，
+分别使用gcc／g++  -O1/-O2/不用-O编译，产出汇编代码观察区别
