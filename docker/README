@@ -1,0 +1,3 @@
+Just for docker run on centos6.3 kernel 2.6.32
+  zpool support copy on write.
+  Docker version is 1.3.0
